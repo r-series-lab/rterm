@@ -1,0 +1,16 @@
+target/
+web/node_modules/
+web/dist/
+src-tauri/gen/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+.codex-artifacts/
+.playwright-mcp/
+playwright-report/
+test-results/
+blob-report/
+*.tmp
+*.log

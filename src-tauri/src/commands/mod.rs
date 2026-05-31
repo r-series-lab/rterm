@@ -1,0 +1,10 @@
+pub mod browse;
+pub mod files;
+pub mod info;
+pub mod open;
+pub mod preview;
+pub mod remote_pool;
+pub mod sessions;
+pub mod settings;
+pub mod terminal;
+pub mod transfer;

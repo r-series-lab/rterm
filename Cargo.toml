@@ -1,0 +1,52 @@
+[package]
+name = "rterm"
+version = "0.1.0"
+edition = "2024"
+authors = ["r"]
+description = "Shared CLI and Rust core for the rTerm desktop workbench"
+license = "MIT"
+
+[workspace]
+members = ["src-tauri"]
+resolver = "3"
+
+[features]
+default = ["protocol-ftp", "protocol-ssh", "protocol-webdav"]
+protocol-ftp = ["dep:remotefs-ftp"]
+protocol-kube = ["dep:remotefs-kube"]
+protocol-s3 = ["dep:remotefs-aws-s3"]
+protocol-ssh = ["dep:remotefs-ssh"]
+protocol-webdav = ["dep:remotefs-webdav"]
+
+[dependencies]
+anyhow = "1.0.100"
+aes-gcm = "0.10"
+clap = { version = "4.5.53", features = ["derive"] }
+dirs = "6.0.0"
+flate2 = "1.1"
+keyring = "3.6.2"
+md5 = "0.7"
+rand = "0.8"
+regex = "1.12.2"
+remotefs = "0.3"
+remotefs-aws-s3 = { version = "0.4", optional = true }
+remotefs-kube = { version = "0.4", optional = true }
+remotefs-ssh = { version = "0.8", default-features = false, features = ["russh"], optional = true }
+remotefs-webdav = { version = "0.2", optional = true }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+rusqlite = { version = "0.37.0", features = ["bundled"] }
+tar = "0.4"
+thiserror = "2.0.17"
+tokio = { version = "1.52.1", features = ["rt"] }
+whoami = "2.0.0"
+zip = { version = "2", default-features = false, features = ["deflate"] }
+
+[dev-dependencies]
+tempfile = "3.23.0"
+
+[target.'cfg(target_family = "unix")'.dependencies]
+remotefs-ftp = { version = "0.4", features = ["native-tls", "native-tls-vendored"], optional = true }
+
+[target.'cfg(target_family = "windows")'.dependencies]
+remotefs-ftp = { version = "0.4", features = ["native-tls"], optional = true }
