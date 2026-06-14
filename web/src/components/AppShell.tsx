@@ -18,8 +18,11 @@ export function AppShell({ sidebar, children }: AppShellProps) {
         color: 'text.primary',
         backgroundColor: 'var(--rterm-app-bg)',
         backgroundImage: 'var(--rterm-app-bg-image)',
+        pt: 'var(--window-drag-height)',
+        position: 'relative',
       }}
     >
+      <Box className="window-drag-region" data-tauri-drag-region />
       <Box
         sx={{
           display: 'grid',

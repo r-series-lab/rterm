@@ -12,6 +12,7 @@
   --rterm-border-soft: rgba(255, 255, 255, 0.055);
   --rterm-text: #f5f3ee;
   --rterm-text-muted: #98a0aa;
+  --window-drag-height: 42px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -53,6 +54,16 @@ body {
     radial-gradient(circle at 12% 6%, rgba(255, 255, 255, 0.08), transparent 20%),
     radial-gradient(circle at 84% 0%, rgba(255, 255, 255, 0.04), transparent 24%),
     linear-gradient(180deg, var(--rterm-bg-a) 0%, var(--rterm-bg-b) 100%);
+}
+
+.window-drag-region {
+  position: fixed;
+  z-index: 30;
+  inset: 0 0 auto;
+  height: var(--window-drag-height);
+  background: var(--rterm-app-bg, var(--rterm-bg-b));
+  border-bottom: 1px solid var(--rterm-border-soft);
+  user-select: none;
 }
 
 html[data-rterm-style='light'] body {
