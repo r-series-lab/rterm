@@ -12,14 +12,14 @@ This repository uses a stage-one preview release workflow.
 
 Open GitHub Actions and run **Release preview desktop packages** manually. The workflow uploads the generated packages as workflow artifacts.
 
-To create a draft GitHub Release, push a version tag:
+To create a draft prerelease with a SHA-256 checksum manifest, push a version tag:
 
 ```bash
 git tag v0.1.0
 git push origin v0.1.0
 ```
 
-The workflow creates a draft release and attaches the generated macOS and Windows packages.
+The workflow creates a Draft prerelease, attaches the generated macOS and Windows packages, and includes `SHA256SUMS.txt`.
 
 ## Unsigned Package Notice
 

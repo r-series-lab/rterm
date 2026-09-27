@@ -336,3 +336,5 @@ web/src/lib/       运行时调用、类型和预览数据
 ## 许可证
 
 MIT，见 [LICENSE](LICENSE)。
+
+公开仓库边界、贡献约定与安全报告方式见 [PUBLIC_REPOSITORY.md](PUBLIC_REPOSITORY.md)、[CONTRIBUTING.md](CONTRIBUTING.md) 和 [SECURITY.md](SECURITY.md)。
