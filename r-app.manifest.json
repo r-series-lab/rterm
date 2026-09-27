@@ -1,0 +1,113 @@
+{
+  "$schema": "https://r.rurie.top/schemas/r-app.manifest.schema.json",
+  "schemaVersion": 1,
+  "identity": {
+    "slug": "rterm",
+    "repo": "rterm",
+    "name": "rTerm",
+    "binary": "rterm",
+    "package": "rterm",
+    "coreCrate": "rterm",
+    "tauriCrate": "rterm_tauri",
+    "identifier": "app.rseries.rterm"
+  },
+  "product": {
+    "architecture": "modular-workbench",
+    "category": "远程目录工作台",
+    "tagline": "在本机安全管理远程目录、文件操作与终端入口。",
+    "description": "连接 SFTP、SCP、FTP、FTPS 和 WebDAV，集中浏览本地与远端文件、执行传输与常见操作，并通过稳定 CLI 支持脚本和 AI Agent。",
+    "stage": "开发预览",
+    "localFirst": true,
+    "nonGoals": [
+      "替代专业终端、SSH 客户端或云盘同步服务",
+      "把远程凭据写入仓库、日志或机器可读诊断",
+      "在没有明确目标和确认的情况下执行批量删除或覆盖"
+    ]
+  },
+  "website": {
+    "publish": true,
+    "index": "05",
+    "accent": "#2f7de1",
+    "accentSoft": "#dfeeff",
+    "platforms": ["macOS", "Windows", "Linux CLI"],
+    "formats": ["Tauri", "Rust", "JSON CLI"],
+    "facts": [
+      { "label": "协议", "value": "SFTP / SCP / FTP / WebDAV" },
+      { "label": "工作方式", "value": "本地与远端双栏" },
+      { "label": "自动化", "value": "稳定 JSON CLI" }
+    ],
+    "capabilities": [
+      { "icon": "FolderTree", "title": "连接与收藏", "body": "管理最近连接、收藏连接与同一主机下的常用目录，减少重复输入和误选目标。" },
+      { "icon": "PanelLeftRight", "title": "双栏文件工作台", "body": "同时浏览本地和远端目录，执行新建、重命名、复制、移动、删除、权限与文本预览。" },
+      { "icon": "ArrowLeftRight", "title": "传输与冲突检查", "body": "上传、下载前显示目标和冲突状态，帮助用户在覆盖文件前核对实际范围。" },
+      { "icon": "TerminalSquare", "title": "终端与补全", "body": "提供本地命令入口、基础远端命令入口，以及按目标终端组织的历史和片段补全。" },
+      { "icon": "Bot", "title": "Agent CLI", "body": "通过 info、capabilities、browse 和 connections 命令输出稳定 JSON，方便脚本和 Agent 调用。" }
+    ],
+    "workflow": [
+      { "label": "连接", "title": "选择协议与目标目录", "body": "从收藏或最近连接进入，并确认主机、协议和起始目录。" },
+      { "label": "检查", "title": "核对本地与远端路径", "body": "在双栏视图确认当前路径、文件名和操作目标，再选择文件动作。" },
+      { "label": "执行", "title": "传输前确认冲突", "body": "上传、下载和删除前查看冲突、权限及目标信息，再执行动作。" },
+      { "label": "自动化", "title": "用 JSON CLI 复用流程", "body": "先用 capabilities 发现能力，再用 browse 或 connections 命令完成可审计的脚本流程。" }
+    ],
+    "boundary": {
+      "title": "连接信息可见，凭据留在本机",
+      "body": "rTerm 是远程目录工作台，不是云盘或无人值守同步服务。它只操作用户明确选择的路径，连接凭据与 SSH 密钥由本机安全存储管理，CLI 输出不应包含秘密内容。"
+    },
+    "releaseSummary": "首个公开预览版覆盖多协议远程目录、双栏浏览、文件操作、传输冲突检查、终端入口和稳定 JSON CLI。",
+    "screenshots": [
+      { "id": "workbench", "source": "docs/assets/screenshots/rterm-workbench.png", "alt": "使用测试连接和示例文件展示的 rTerm 双栏工作台", "title": "双栏远程目录工作台", "description": "截图仅使用 example.test、demo-user 和示例文件名，不包含真实连接或个人数据。", "caption": "在一张界面中核对本地与远端目录、收藏路径和传输动作。", "highlights": ["本地与远端路径并列", "测试连接标识清晰", "文件动作与终端入口集中"], "documentId": "interface-guide" }
+    ]
+  },
+  "documentation": [
+    { "id": "overview", "label": "产品与使用概览", "description": "定位、功能边界、CLI、隐私和开发说明。", "group": "开始使用", "source": "README.md" },
+    { "id": "interface-guide", "label": "界面使用手册", "description": "工作台、连接、双栏文件和终端入口的使用说明。", "group": "开始使用", "source": "docs/interface-guide.md" },
+    { "id": "changelog", "label": "更新日志", "description": "按版本记录功能、协议和文档变化。", "group": "版本", "source": "CHANGELOG.md" }
+  ],
+  "cli": {
+    "contractVersion": 1,
+    "jsonFlagPosition": "command-local",
+    "infoCommand": ["info", "--json"],
+    "capabilitiesCommand": ["capabilities", "--json"],
+    "doctorCommand": ["connections", "test", "--json"],
+    "domains": ["info", "capabilities", "browse", "connections"],
+    "highRiskPolicy": "真实连接、上传、下载、删除和远端命令都必须由用户明确指定目标，并在执行前核对路径和冲突。"
+  },
+  "runtime": {
+    "configKind": "json",
+    "configPath": "系统配置目录中的 rterm JSON 配置",
+    "stateKind": "sqlite",
+    "storagePath": "本机应用数据目录中的 rterm 数据库",
+    "secretPolicy": "连接凭据和 SSH 密钥不进入仓库、截图、日志或 JSON 诊断；公开示例只使用测试连接。"
+  },
+  "quality": {
+    "requiredScripts": ["dev", "build", "web:build", "rust-check"],
+    "validationCommands": ["npm run web:build", "npm run rust-check", "cargo test --manifest-path ./src-tauri/Cargo.toml"]
+  },
+  "localization": {
+    "defaultLocale": "zh",
+    "translations": {
+      "en": {
+        "product": {
+          "category": "Remote directory workbench",
+          "tagline": "Manage remote directories, file actions, and terminal entry points locally.",
+          "description": "Connect to SFTP, SCP, FTP, FTPS, and WebDAV, browse local and remote files, perform transfers, and expose a stable CLI for scripts and AI agents.",
+          "stage": "Development preview",
+          "nonGoals": ["Replace a full terminal, SSH client, or cloud sync service", "Write remote credentials into repositories, logs, or diagnostics", "Run bulk deletion or overwrite without a visible target and confirmation"]
+        },
+        "website": {
+          "facts": [{ "label": "Protocols", "value": "SFTP / SCP / FTP / WebDAV" }, { "label": "Workspace", "value": "Local and remote panes" }, { "label": "Automation", "value": "Stable JSON CLI" }],
+          "capabilities": [{ "icon": "FolderTree", "title": "Connections and favorites", "body": "Keep recent connections, favorites, and common directories for each host in one local workspace." }, { "icon": "PanelLeftRight", "title": "Two-pane file workbench", "body": "Browse local and remote directories together and run common file actions with the target in view." }, { "icon": "ArrowLeftRight", "title": "Transfers with conflict checks", "body": "Review destination and conflicts before uploading or downloading files." }, { "icon": "TerminalSquare", "title": "Terminal and completion", "body": "Use local and basic remote command entry points with history and target-terminal completion." }, { "icon": "Bot", "title": "Agent CLI", "body": "Discover capabilities and run browse or connection checks through stable JSON commands." }],
+          "workflow": [{ "label": "Connect", "title": "Choose a protocol and target", "body": "Open a favorite or recent connection and confirm the host, protocol, and starting directory." }, { "label": "Inspect", "title": "Verify local and remote paths", "body": "Check both panes, filenames, and the intended target before running a file action." }, { "label": "Execute", "title": "Review transfer conflicts", "body": "Inspect conflicts, permissions, and destination details before upload, download, or deletion." }, { "label": "Automate", "title": "Reuse the flow through JSON CLI", "body": "Discover capabilities first, then use browse or connection commands in scripts and agents." }],
+          "boundary": { "title": "Connection state is visible; secrets stay local", "body": "rTerm is a remote directory workbench, not a cloud sync service. It operates on explicitly selected paths, while credentials and SSH keys remain in local secure storage and CLI output avoids secrets." },
+          "releaseSummary": "The first public preview covers multi-protocol remote directories, two-pane browsing, file actions, transfer conflict checks, terminal entry, and a stable JSON CLI.",
+          "screenshots": [{ "id": "workbench", "source": "docs/assets/screenshots/rterm-workbench.png", "alt": "rTerm two-pane workbench using test connections and sample files", "title": "Two-pane remote directory workbench", "description": "The screenshot uses example.test, demo-user, and sample filenames only; it contains no real connection or personal data.", "caption": "Review local and remote directories, favorite paths, and transfer actions in one surface.", "highlights": ["Local and remote paths side by side", "Test connection labels are explicit", "File actions and terminal entry in one place"], "documentId": "interface-guide" }]
+        },
+        "documentation": [
+          { "id": "overview", "label": "Product and usage overview", "description": "Purpose, features, CLI, privacy, and development notes.", "group": "Getting started", "source": "README_EN.md", "reviewedForVersion": "0.1.0" },
+          { "id": "interface-guide", "label": "Interface guide", "description": "How to use the workbench, connections, two-pane files, and terminal entry.", "group": "Getting started", "source": "docs/interface-guide_EN.md", "reviewedForVersion": "0.1.0" },
+          { "id": "changelog", "label": "Changelog", "description": "Features, protocol support, and documentation changes by version.", "group": "Releases", "source": "CHANGELOG_EN.md", "reviewedForVersion": "0.1.0" }
+        ]
+      }
+    }
+  }
+}
