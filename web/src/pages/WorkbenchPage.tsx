@@ -3288,7 +3288,7 @@ export function WorkbenchPage({
     localListing ?? {
       source: 'local',
       endpoint: null,
-      directory: '~/Documents',
+      directory: '/tmp/rterm-demo',
       totalEntries: 0,
       visibleEntries: 0,
       entries: [],

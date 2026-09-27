@@ -2817,7 +2817,7 @@ function ActivePage({ styleMode, onToggleStyleMode }: ActivePageProps) {
         title: '工作台已刷新',
         detail: isRemoteBrowserConnected
           ? `当前目录：${workbenchState?.remote.directory ?? activeConnection.path}`
-          : `本地目录：${workbenchState?.local.directory ?? '~/Documents'}`,
+          : `本地目录：${workbenchState?.local.directory ?? '/tmp/rterm-demo'}`,
       });
     } catch (error) {
       if (isRemoteBrowserConnected) {
@@ -2829,7 +2829,7 @@ function ActivePage({ styleMode, onToggleStyleMode }: ActivePageProps) {
       } else {
         setBrowserPaneError(
           'local',
-          workbenchState?.local.directory ?? '~/Documents',
+        workbenchState?.local.directory ?? '/tmp/rterm-demo',
           error instanceof Error ? error.message : '未能完成目录刷新。',
         );
       }

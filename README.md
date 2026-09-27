@@ -338,3 +338,14 @@ web/src/lib/       运行时调用、类型和预览数据
 MIT，见 [LICENSE](LICENSE)。
 
 公开仓库边界、贡献约定与安全报告方式见 [PUBLIC_REPOSITORY.md](PUBLIC_REPOSITORY.md)、[CONTRIBUTING.md](CONTRIBUTING.md) 和 [SECURITY.md](SECURITY.md)。
+
+## 界面预览与公开文档
+
+公开截图只使用 `/tmp/rterm-demo`、`example.com` 和空状态等合成数据，不包含真实服务器、账号或个人路径。
+
+![rTerm 双栏工作台](docs/assets/screenshots/rterm-workbench.png)
+
+- [界面与公开演示说明](docs/interface-guide.md)
+- [发布说明](RELEASE.md)
+- [安全边界](SECURITY.md)
+- [贡献指南](CONTRIBUTING.md)
